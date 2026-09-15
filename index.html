@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby de Robux - Broma</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #087cff;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .pantalla {
+            width: 100%;
+            max-width: 500px;
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 55px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 4px 4px 0 #0055bb;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 17px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            max-width: 350px;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        button {
+            border: none;
+            background: white;
+            color: #087cff;
+            padding: 15px 35px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .nota {
+            font-size: 13px;
+            opacity: 0.9;
+            max-width: 350px;
+        }
+
+        #segundaPantalla {
+            display: none;
+        }
+
+        .contador {
+            font-size: 70px;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 3px 3px 0 #0055bb;
+        }
+
+        .caja {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        #mensajeFinal {
+            display: none;
+            font-size: 30px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PRIMERA PANTALLA -->
+    <div class="pantalla" id="primeraPantalla">
+
+        <div class="logo">🎮 ROBUX</div>
+
+        <h1>¡Bienvenido al Lobby!</h1>
+
+        <p>Escribe un correo para continuar.</p>
+
+        <input
+            type="email"
+            id="correo"
+            placeholder="correo@ejemplo.com"
+        >
+
+        <p class="nota">
+            Nota: para que lleguen los Robux poner correo electrónico.
+            <br><br>
+            ⚠️ Esta página es para Luis cuidado como lo usas o el vendrá por ti
+        </p>
+
+        <button onclick="continuar()">
+            CONTINUAR 🚀
+        </button>
+
+    </div>
+
+
+    <!-- SEGUNDA PANTALLA -->
+    <div class="pantalla" id="segundaPantalla">
+
+        <div class="caja">
+
+            <div class="emoji">💰</div>
+
+            <h1>Procesando Robux...</h1>
+
+            <p>Espera mientras termina el contador.</p>
+
+            <div class="contador" id="contador">
+                3:00
+            </div>
+
+            <div id="mensajeFinal">
+                😂<br><br>
+                SI QUIERES ROBUX<br>
+                DILE A LUIS JAJAJAJAJA
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function continuar() {
+
+            const correo = document.getElementById("correo").value;
+
+            if (correo === "") {
+                alert("Escribe algo para continuar 😂");
+                return;
+            }
+
+            // Cuidado Luis viene
+            document.getElementById("primeraPantalla").style.display = "none";
+            document.getElementById("segundaPantalla").style.display = "flex";
+
+            iniciarContador();
+        }
+
+
+        function iniciarContador() {
+
+            let segundos = 180;
+
+            const contador = document.getElementById("contador");
+            const mensaje = document.getElementById("mensajeFinal");
+
+            const intervalo = setInterval(function() {
+
+                segundos--;
+
+                let minutos = Math.floor(segundos / 60);
+                let segundosRestantes = segundos % 60;
+
+                segundosRestantes =
+                    segundosRestantes < 10
+                    ? "0" + segundosRestantes
+                    : segundosRestantes;
+
+                contador.textContent =
+                    minutos + ":" + segundosRestantes;
+
+                if (segundos <= 0) {
+
+                    clearInterval(intervalo);
+
+                    contador.style.display = "none";
+                    mensaje.style.display = "block";
+
+                }
+
+            }, 1000);
+        }
+
+    </script>
+
+</body>
+</html>
