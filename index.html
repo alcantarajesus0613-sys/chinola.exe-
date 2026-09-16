@@ -1,231 +1,1198 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobby de Robux - Broma</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<title>Robux Lobby</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #087cff;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
+<style>
 
-        .pantalla {
-            width: 100%;
-            max-width: 500px;
-            min-height: 100vh;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+/* ==============================
+   CONFIGURACIÓN GENERAL
+================================ */
 
-        .logo {
-            font-size: 55px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 4px 4px 0 #0055bb;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        h1 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
+body {
+    min-height: 100vh;
+    overflow: hidden;
 
-        p {
-            font-size: 17px;
-            margin-bottom: 20px;
-        }
+    font-family: Arial, Helvetica, sans-serif;
 
-        input {
-            width: 100%;
-            max-width: 350px;
-            padding: 16px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-bottom: 12px;
-            outline: none;
-        }
+    color: white;
 
-        button {
-            border: none;
-            background: white;
-            color: #087cff;
-            padding: 15px 35px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    background:
+        radial-gradient(circle at 15% 20%, #087cff55, transparent 30%),
+        radial-gradient(circle at 85% 75%, #6c00ff55, transparent 30%),
+        linear-gradient(135deg, #04152f, #073b7d, #11145b);
 
-        button:hover {
-            transform: scale(1.05);
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .nota {
-            font-size: 13px;
-            opacity: 0.9;
-            max-width: 350px;
-        }
 
-        #segundaPantalla {
-            display: none;
-        }
+/* ==============================
+   FONDO
+================================ */
 
-        .contador {
-            font-size: 70px;
-            font-weight: bold;
-            margin: 30px 0;
-            text-shadow: 3px 3px 0 #0055bb;
-        }
+.fondo {
+    position: fixed;
+    inset: 0;
 
-        .caja {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 30px;
-            border-radius: 20px;
-            width: 100%;
-        }
+    overflow: hidden;
 
-        #mensajeFinal {
-            display: none;
-            font-size: 30px;
-            font-weight: bold;
-            line-height: 1.3;
-        }
+    pointer-events: none;
 
-        .emoji {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-    </style>
+    z-index: 0;
+}
+
+
+/* BLOQUES */
+
+.bloque {
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.03)
+        );
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    transform: rotate(45deg);
+
+    box-shadow:
+        0 0 30px rgba(0,160,255,.08);
+
+    animation:
+        flotar 10s infinite ease-in-out;
+}
+
+.bloque:nth-child(1) {
+    top: 5%;
+    left: 5%;
+}
+
+.bloque:nth-child(2) {
+    top: 70%;
+    left: 8%;
+
+    width: 120px;
+    height: 120px;
+
+    animation-delay: 2s;
+}
+
+.bloque:nth-child(3) {
+    top: 10%;
+    right: 8%;
+
+    width: 100px;
+    height: 100px;
+
+    animation-delay: 4s;
+}
+
+.bloque:nth-child(4) {
+    bottom: 8%;
+    right: 10%;
+
+    width: 75px;
+    height: 75px;
+
+    animation-delay: 1s;
+}
+
+.bloque:nth-child(5) {
+    top: 45%;
+    left: -30px;
+
+    width: 100px;
+    height: 100px;
+
+    animation-delay: 5s;
+}
+
+.bloque:nth-child(6) {
+    top: 35%;
+    right: -30px;
+
+    width: 90px;
+    height: 90px;
+
+    animation-delay: 3s;
+}
+
+
+@keyframes flotar {
+
+    0%,100% {
+        transform:
+            rotate(45deg)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotate(55deg)
+            translateY(-30px);
+    }
+}
+
+
+/* ==============================
+   PARTICULAS
+================================ */
+
+.particula {
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.7);
+
+    animation:
+        subir 7s infinite linear;
+}
+
+.particula:nth-child(7) {
+    left: 20%;
+    bottom: -20px;
+    animation-delay: 1s;
+}
+
+.particula:nth-child(8) {
+    left: 40%;
+    bottom: -20px;
+    animation-delay: 3s;
+}
+
+.particula:nth-child(9) {
+    left: 60%;
+    bottom: -20px;
+    animation-delay: 5s;
+}
+
+.particula:nth-child(10) {
+    left: 80%;
+    bottom: -20px;
+    animation-delay: 2s;
+}
+
+@keyframes subir {
+
+    from {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+
+
+/* ==============================
+   PANTALLA
+================================ */
+
+.pantalla {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 92%;
+
+    max-width: 510px;
+
+    min-height: 570px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+/* ==============================
+   TARJETA
+================================ */
+
+.caja {
+
+    width: 100%;
+
+    padding: 42px 30px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(3,16,40,.84);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5),
+        inset 0 1px rgba(255,255,255,.08);
+
+    animation:
+        aparecer .7s ease;
+}
+
+
+@keyframes aparecer {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(30px)
+            scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* ==============================
+   LOGO
+================================ */
+
+.logo {
+
+    width: 105px;
+    height: 105px;
+
+    margin: auto;
+    margin-bottom: 22px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 26px;
+
+    font-size: 55px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #9edfff
+        );
+
+    color: #087cff;
+
+    box-shadow:
+        0 15px 40px rgba(0,130,255,.35);
+
+    animation:
+        logoAnim 3s infinite ease-in-out;
+}
+
+
+@keyframes logoAnim {
+
+    0%,100% {
+        transform:
+            rotate(-4deg)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotate(4deg)
+            translateY(-8px);
+    }
+}
+
+
+/* ==============================
+   TEXTOS
+================================ */
+
+h1 {
+
+    font-size: 32px;
+
+    margin-bottom: 12px;
+
+    font-weight: 900;
+}
+
+.subtitulo {
+
+    color: #a9cff4;
+
+    line-height: 1.5;
+
+    margin-bottom: 28px;
+
+    font-size: 16px;
+}
+
+
+/* ==============================
+   INPUT
+================================ */
+
+.campo {
+
+    text-align: left;
+
+    margin-bottom: 18px;
+}
+
+.campo label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #d9edff;
+}
+
+
+input {
+
+    width: 100%;
+
+    padding: 17px;
+
+    border-radius: 15px;
+
+    border: 2px solid transparent;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #16263b;
+
+    font-size: 17px;
+
+    transition: .25s;
+}
+
+
+input:focus {
+
+    border-color: #20baff;
+
+    box-shadow:
+        0 0 0 4px rgba(0,190,255,.12);
+}
+
+
+/* ==============================
+   BOTÓN
+================================ */
+
+button {
+
+    width: 100%;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00b7ff,
+            #1768ff
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 30px rgba(0,100,255,.35);
+
+    transition: .25s;
+}
+
+
+button:hover {
+
+    transform:
+        translateY(-3px)
+        scale(1.01);
+
+    box-shadow:
+        0 18px 35px rgba(0,130,255,.5);
+}
+
+
+button:active {
+
+    transform: scale(.98);
+}
+
+
+/* ==============================
+   INFO
+================================ */
+
+.info {
+
+    margin-top: 18px;
+
+    color: #759cc5;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   SEGUNDA PANTALLA
+================================ */
+
+#segundaPantalla {
+
+    display: none;
+}
+
+
+/* ICONO */
+
+.icono-dinero {
+
+    font-size: 70px;
+
+    margin-bottom: 12px;
+
+    animation:
+        dinero 1.8s infinite ease-in-out;
+}
+
+
+@keyframes dinero {
+
+    0%,100% {
+        transform:
+            translateY(0)
+            rotate(0);
+    }
+
+    50% {
+        transform:
+            translateY(-10px)
+            rotate(5deg);
+    }
+}
+
+
+/* ==============================
+   PERFIL SIMULADO
+================================ */
+
+.perfil {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin: 22px 0;
+
+    padding: 14px;
+
+    border-radius: 17px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    text-align: left;
+}
+
+
+.avatar {
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1ca9ff,
+            #694cff
+        );
+}
+
+
+.perfil strong {
+
+    display: block;
+
+    margin-bottom: 4px;
+}
+
+
+.perfil span {
+
+    color: #75b8e9;
+
+    font-size: 13px;
+}
+
+
+/* ==============================
+   ESTADO
+================================ */
+
+.estado {
+
+    color: #9fc9ef;
+
+    font-size: 14px;
+
+    margin-bottom: 10px;
+}
+
+
+/* ==============================
+   CIRCULO DE CARGA
+================================ */
+
+.loader {
+
+    width: 60px;
+    height: 60px;
+
+    margin: 20px auto;
+
+    border-radius: 50%;
+
+    border: 5px solid rgba(255,255,255,.1);
+
+    border-top-color: #19bfff;
+
+    animation:
+        girar 1s linear infinite;
+}
+
+
+@keyframes girar {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ==============================
+   BARRA
+================================ */
+
+.barra {
+
+    width: 100%;
+
+    height: 11px;
+
+    margin: 20px 0;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.09);
+}
+
+
+.progreso {
+
+    height: 100%;
+
+    width: 100%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00d4ff,
+            #1765ff
+        );
+
+    transition:
+        width 1s linear;
+}
+
+
+/* ==============================
+   CONTADOR
+================================ */
+
+.contador {
+
+    font-size: 78px;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    margin: 15px 0;
+
+    text-shadow:
+        0 10px 35px rgba(0,0,0,.5);
+}
+
+
+/* ==============================
+   FINAL
+================================ */
+
+#mensajeFinal {
+
+    display: none;
+
+    animation:
+        aparecer .8s ease;
+}
+
+
+.emoji-final {
+
+    font-size: 80px;
+
+    margin-bottom: 15px;
+
+    animation:
+        rebote 1s infinite;
+}
+
+
+@keyframes rebote {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+
+.mensaje-grande {
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    line-height: 1.3;
+}
+
+
+.mensaje-pequeno {
+
+    margin-top: 15px;
+
+    color: #9fc8ed;
+
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   CELULAR
+================================ */
+
+@media(max-width:500px) {
+
+    .pantalla {
+        width: 94%;
+    }
+
+    .caja {
+        padding: 35px 21px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .contador {
+        font-size: 61px;
+    }
+
+    .logo {
+        width: 85px;
+        height: 85px;
+        font-size: 42px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- PRIMERA PANTALLA -->
-    <div class="pantalla" id="primeraPantalla">
 
-        <div class="logo">🎮 ROBUX</div>
+<!-- ==============================
+     FONDO
+================================ -->
 
-        <h1>¡Bienvenido al Lobby!</h1>
+<div class="fondo">
 
-        <p>Escribe un correo para continuar.</p>
+    <div class="bloque"></div>
+    <div class="bloque"></div>
+    <div class="bloque"></div>
+    <div class="bloque"></div>
+    <div class="bloque"></div>
+    <div class="bloque"></div>
 
-        <input
-            type="email"
-            id="correo"
-            placeholder="correo@ejemplo.com"
-        >
+    <div class="particula"></div>
+    <div class="particula"></div>
+    <div class="particula"></div>
+    <div class="particula"></div>
 
-        <p class="nota">
-            Nota: para que lleguen los Robux poner correo electrónico.
-            <br><br>
-            ⚠️ Esta página es para Luis cuidado como lo usas o el vendrá por ti
+</div>
+
+
+
+<!-- ==============================
+     PRIMERA PANTALLA
+================================ -->
+
+<div
+    class="pantalla"
+    id="primeraPantalla"
+>
+
+    <div class="caja">
+
+        <div class="logo">
+            🎮
+        </div>
+
+        <h1>
+            ROBUX LOBBY
+        </h1>
+
+        <p class="subtitulo">
+            Introduce tu ID de jugador
+            para comenzar el proceso.
         </p>
+
+
+        <div class="campo">
+
+            <label for="playerID">
+                🆔 ID DE JUGADOR
+            </label>
+
+            <input
+                type="text"
+                id="playerID"
+                placeholder="Ejemplo: 123456789"
+                inputmode="numeric"
+                maxlength="20"
+            >
+
+        </div>
+
 
         <button onclick="continuar()">
             CONTINUAR 🚀
         </button>
 
+
+        <p class="info">
+            Solo se utiliza el ID introducido
+            para mostrarlo en esta demostración.
+        </p>
+
     </div>
 
+</div>
 
-    <!-- SEGUNDA PANTALLA -->
-    <div class="pantalla" id="segundaPantalla">
 
-        <div class="caja">
 
-            <div class="emoji">💰</div>
+<!-- ==============================
+     SEGUNDA PANTALLA
+================================ -->
 
-            <h1>Procesando Robux...</h1>
+<div
+    class="pantalla"
+    id="segundaPantalla"
+>
 
-            <p>Espera mientras termina el contador.</p>
+    <div class="caja">
 
-            <div class="contador" id="contador">
-                3:00
+        <div class="icono-dinero">
+            💰
+        </div>
+
+
+        <h1>
+            Procesando Robux
+        </h1>
+
+
+        <!-- PERFIL -->
+
+        <div class="perfil">
+
+            <div class="avatar">
+                👤
             </div>
 
-            <div id="mensajeFinal">
-                😂<br><br>
-                SI QUIERES ROBUX<br>
-                DILE A LUIS JAJAJAJAJA
+            <div>
+
+                <strong>
+                    Jugador
+                </strong>
+
+                <span id="usuario">
+                    ID: ---
+                </span>
+
             </div>
+
+        </div>
+
+
+        <p
+            class="estado"
+            id="estado"
+        >
+            Preparando proceso...
+        </p>
+
+
+        <div class="loader"></div>
+
+
+        <div class="barra">
+
+            <div
+                class="progreso"
+                id="progreso"
+            ></div>
+
+        </div>
+
+
+        <div
+            class="contador"
+            id="contador"
+        >
+            3:00
+        </div>
+
+
+        <!-- MENSAJE FINAL -->
+
+        <div id="mensajeFinal">
+
+            <div class="emoji-final">
+                😂
+            </div>
+
+            <div class="mensaje-grande">
+                ¡ERA UNA BROMA!
+            </div>
+
+            <p class="mensaje-pequeno">
+                Si quieres Robux,
+                dile a Luis JAJAJA 😂
+            </p>
 
         </div>
 
     </div>
 
+</div>
 
-    <script>
 
-        function continuar() {
 
-            const correo = document.getElementById("correo").value;
+<script>
 
-            if (correo === "") {
-                alert("Escribe algo para continuar 😂");
-                return;
+
+/* ==============================
+   VARIABLE DEL CONTADOR
+================================ */
+
+let intervalo;
+
+
+/* ==============================
+   CONTINUAR
+================================ */
+
+function continuar() {
+
+    const input =
+        document.getElementById("playerID");
+
+    const id =
+        input.value.trim();
+
+
+    /* CAMPO VACÍO */
+
+    if (id === "") {
+
+        alert(
+            "Escribe tu ID para continuar 😂"
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    /* SOLO NÚMEROS */
+
+    if (!/^[0-9]+$/.test(id)) {
+
+        alert(
+            "El ID debe contener solamente números."
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    /* MOSTRAR ID */
+
+    document
+        .getElementById("usuario")
+        .textContent =
+        "ID: " + id;
+
+
+    /* CAMBIAR PANTALLA */
+
+    document
+        .getElementById("primeraPantalla")
+        .style.display = "none";
+
+
+    document
+        .getElementById("segundaPantalla")
+        .style.display = "flex";
+
+
+    iniciarContador();
+}
+
+
+
+/* ==============================
+   CONTADOR
+================================ */
+
+function iniciarContador() {
+
+    clearInterval(intervalo);
+
+
+    let segundos = 180;
+
+
+    const contador =
+        document.getElementById("contador");
+
+    const progreso =
+        document.getElementById("progreso");
+
+    const mensaje =
+        document.getElementById("mensajeFinal");
+
+    const estado =
+        document.getElementById("estado");
+
+
+    contador.style.display =
+        "block";
+
+
+    mensaje.style.display =
+        "none";
+
+
+    progreso.style.width =
+        "100%";
+
+
+    estado.style.display =
+        "block";
+
+
+    actualizar();
+
+
+    intervalo =
+        setInterval(() => {
+
+            segundos--;
+
+
+            actualizar();
+
+
+            const porcentaje =
+                (segundos / 180) * 100;
+
+
+            progreso.style.width =
+                porcentaje + "%";
+
+
+            /* MENSAJES */
+
+            if (segundos > 120) {
+
+                estado.textContent =
+                    "🔵 Conectando con el lobby...";
             }
 
-            // Cuidado Luis viene
-            document.getElementById("primeraPantalla").style.display = "none";
-            document.getElementById("segundaPantalla").style.display = "flex";
+            else if (segundos > 90) {
 
-            iniciarContador();
+                estado.textContent =
+                    "🟡 Verificando jugador...";
+            }
+
+            else if (segundos > 60) {
+
+                estado.textContent =
+                    "🟠 Preparando proceso...";
+            }
+
+            else if (segundos > 0) {
+
+                estado.textContent =
+                    "🟢 Finalizando proceso...";
+            }
+
+
+            /* TERMINAR */
+
+            if (segundos <= 0) {
+
+                clearInterval(intervalo);
+
+
+                contador.style.display =
+                    "none";
+
+
+                progreso.style.width =
+                    "0%";
+
+
+                estado.style.display =
+                    "none";
+
+
+                mensaje.style.display =
+                    "block";
+            }
+
+        }, 1000);
+
+
+
+    /* ==========================
+       ACTUALIZAR CONTADOR
+    =========================== */
+
+    function actualizar() {
+
+        let minutos =
+            Math.floor(segundos / 60);
+
+        let segundosRestantes =
+            segundos % 60;
+
+
+        if (segundosRestantes < 10) {
+
+            segundosRestantes =
+                "0" + segundosRestantes;
         }
 
 
-        function iniciarContador() {
+        contador.textContent =
+            minutos +
+            ":" +
+            segundosRestantes;
+    }
 
-            let segundos = 180;
+}
 
-            const contador = document.getElementById("contador");
-            const mensaje = document.getElementById("mensajeFinal");
-
-            const intervalo = setInterval(function() {
-
-                segundos--;
-
-                let minutos = Math.floor(segundos / 60);
-                let segundosRestantes = segundos % 60;
-
-                segundosRestantes =
-                    segundosRestantes < 10
-                    ? "0" + segundosRestantes
-                    : segundosRestantes;
-
-                contador.textContent =
-                    minutos + ":" + segundosRestantes;
-
-                if (segundos <= 0) {
-
-                    clearInterval(intervalo);
-
-                    contador.style.display = "none";
-                    mensaje.style.display = "block";
-
-                }
-
-            }, 1000);
-        }
-
-    </script>
+</script>
 
 </body>
 </html>
+```
